@@ -1,0 +1,7 @@
+﻿  ConsoleApplication.cpp
+C:\Users\avpokazatskaia\source\repos\ConsoleApplication\ConsoleApplication\ConsoleApplication.cpp(180,13): warning C4129: C: неизвестная escape-последовательность
+C:\Users\avpokazatskaia\source\repos\ConsoleApplication\ConsoleApplication\ConsoleApplication.cpp(212,13): warning C4129: C: неизвестная escape-последовательность
+C:\Users\avpokazatskaia\source\repos\ConsoleApplication\ConsoleApplication\ConsoleApplication.cpp(317,48): warning C4244: аргумент: преобразование "unsigned __int64" в "DWORD", возможна потеря данных
+C:\Users\avpokazatskaia\source\repos\ConsoleApplication\ConsoleApplication\ConsoleApplication.cpp(378,19): warning C4244: аргумент: преобразование "unsigned __int64" в "DWORD", возможна потеря данных
+C:\Users\avpokazatskaia\source\repos\ConsoleApplication\ConsoleApplication\ConsoleApplication.cpp(438,9): warning C4551: в вызове функции отсутствует список аргументов
+  ConsoleApplication.vcxproj -> C:\Users\avpokazatskaia\source\repos\ConsoleApplication\x64\Debug\ConsoleApplication.exe
