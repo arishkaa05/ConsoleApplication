@@ -12,6 +12,7 @@ void menu();
 void diskList();
 void diskType(LPTSTR c);
 void diskListInfo();
+void systemFlags(DWORD flags);
 void createFolder();
 void deleteFolder();
 void createFile();
@@ -157,13 +158,14 @@ void diskListInfo() {
     DWORD BytesPerSector; //число байт в секторе
     DWORD NumberOfFreeClusters; //число свободных кластеров
     DWORD TotalNumberOfClusters; //общее число кластеров
+    DWORD FileSF; //Указатель на переменную, которая получает флаги
     wchar_t  VolumeNameBuffer[VolumeNameSize], FileSystemNameBuffer[FileSystemNameSize];
     wchar_t PathName[] = L"C:\\";
     cout << "Enter disc name: ";
     wcin >> c;
     PathName[0] = c;
     diskType(PathName);
-    GetVolumeInformationW(PathName, VolumeNameBuffer, VolumeNameSize, &VolumeSerialNumber, &MaximumComponentLength, NULL, FileSystemNameBuffer, FileSystemNameSize);
+    GetVolumeInformationW(PathName, VolumeNameBuffer, VolumeNameSize, &VolumeSerialNumber, &MaximumComponentLength, &FileSF, FileSystemNameBuffer, FileSystemNameSize);
     cout << "\nDrive name: " << VolumeNameBuffer;
     cout << "\nSerial number: " << VolumeSerialNumber;
     cout << "\nMax file name length: " << MaximumComponentLength;
@@ -173,7 +175,66 @@ void diskListInfo() {
     cout << "\nNumber of free clusters: " << NumberOfFreeClusters;
     cout << "\nNumber of sectors in the cluster: " << SectorsPerCluster;
     cout << "\nNumber of bytes in the sector: " << BytesPerSector << '\n';
+    systemFlags(FileSF);
+    cout << "\n";
 }
+
+void systemFlags(DWORD FileSF) {
+    if (FileSF & FILE_CASE_SENSITIVE_SEARCH)
+        cout << "\nThe specified volume supports case-sensitive file names.";
+    if (FileSF & FILE_CASE_PRESERVED_NAMES)
+        cout << "\nThe specified volume supports preserved case of file names when it places a name on disk";
+    if (FileSF & FILE_UNICODE_ON_DISK)
+        cout << "\nThe specified volume supports Unicode in file names as they appear on disk";
+    if (FileSF & FILE_PERSISTENT_ACLS)
+        cout << "\nThe specified volume preserves and enforces access control lists (ACL)";
+    if (FileSF & FILE_FILE_COMPRESSION)
+        cout << "\nThe specified volume supports file-based compression";
+    if (FileSF & FILE_VOLUME_QUOTAS)
+        cout << "\nThe specified volume supports disk quotas";
+    if (FileSF & FILE_SUPPORTS_SPARSE_FILES)
+        cout << "\nThe specified volume supports sparse files";
+    if (FileSF & FILE_SUPPORTS_REPARSE_POINTS)
+        cout << "\nThe specified volume supports reparse points";
+    if (FileSF & FILE_SUPPORTS_REMOTE_STORAGE)
+        cout << "\nThe file system supports remote storage";
+    if (FileSF & FILE_RETURNS_CLEANUP_RESULT_INFO)
+        cout << "\nThe file system returns information that describes additional actions taken during cleanup";
+    if (FileSF & FILE_SUPPORTS_POSIX_UNLINK_RENAME)
+        cout << "\nThe file system supports POSIX-style delete and rename operations";
+    if (FileSF & FILE_VOLUME_IS_COMPRESSED)
+        cout << "\nThe specified volume is a compressed volume";
+    if (FileSF & FILE_SUPPORTS_OBJECT_IDS)
+        cout << "\nThe file system supports object identifiers";
+    if (FileSF & FILE_SUPPORTS_ENCRYPTION)
+        cout << "\nThe file system supports encryption";
+    if (FileSF & FILE_NAMED_STREAMS)
+        cout << "\nThe file system supports named data streams for a file";
+    if (FileSF & FILE_READ_ONLY_VOLUME)
+        cout << "\nThe specified volume is read-only";
+    if (FileSF & FILE_SEQUENTIAL_WRITE_ONCE)
+        cout << "\nThe specified volume can be written to one time only";
+    if (FileSF & FILE_SUPPORTS_TRANSACTIONS)
+        cout << "\nThe file system supports transaction processing";
+    if (FileSF & FILE_SUPPORTS_HARD_LINKS)
+        cout << "\nThe file system supports direct links to other devices and partitions";
+    if (FileSF & FILE_SUPPORTS_EXTENDED_ATTRIBUTES)
+        cout << "\nThe file system supports extended attributes (EAs)";
+    if (FileSF & FILE_SUPPORTS_OPEN_BY_FILE_ID)
+        cout << "\nThe file system supports open by file ID";
+    if (FileSF & FILE_SUPPORTS_USN_JOURNAL)
+        cout << "\nThe file system supports update sequence number (USN) journals";
+    if (FileSF & FILE_SUPPORTS_INTEGRITY_STREAMS)
+        cout << "\nThe file system supports integrity streams";
+    if (FileSF & FILE_SUPPORTS_BLOCK_REFCOUNTING)
+        cout << "\nThe file system supports block cloning, that is, sharing logical clusters between files on the same volume";
+    if (FileSF & FILE_SUPPORTS_SPARSE_VDL)
+        cout << "\nThe file system tracks whether each cluster of a file contains valid data or invalid data";
+    if (FileSF & FILE_DAX_VOLUME)
+        cout << "\nThe specified volume is a direct access (DAX) volume";
+    if (FileSF & FILE_SUPPORTS_GHOSTING)
+        cout << "\nThe specified volume supports ghosting";
+};
 
 void createFolder() {
     wchar_t fullPath[255];
